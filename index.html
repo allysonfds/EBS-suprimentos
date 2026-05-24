@@ -28,7 +28,7 @@
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
 /* ── SETUP BANNER ── */
-#setup-banner{background:linear-gradient(135deg,#1a0a00,#3d1f00);border-bottom:2px solid var(--ebs-yellow);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+#setup-banner{background:linear-gradient(135deg,#1a0a00,#3d1f00);border-bottom:2px solid var(--ebs-yellow);padding:14px 24px;display:none;align-items:center;gap:16px;flex-wrap:wrap}
 #setup-banner h3{color:var(--ebs-yellow);font-size:14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 #setup-banner p{color:#e8c87a;font-size:12px;flex:1;min-width:200px}
 .setup-inputs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -268,10 +268,7 @@ label{font-size:10px;color:var(--text2);display:block;margin-bottom:5px;font-wei
       <div class="fgroup"><label>Usuário</label><input id="inp-user" placeholder="seu.usuario" autocomplete="username"></div>
       <div class="fgroup"><label>Senha</label><input type="password" id="inp-pass" placeholder="••••••••" autocomplete="current-password"></div>
       <button class="btn-login" onclick="doLogin()">Entrar no Sistema</button>
-      <div class="login-hint">
-        Demo: <b>solicitante/123</b> · <b>aprovador/123</b><br>
-        <b>almoxarife/123</b> · <b>comprador/123</b> · <b>admin/admin</b>
-      </div>
+
     </div>
   </div>
 </div>
@@ -466,6 +463,8 @@ function doLogin(){
   if(adm||['aprovador','almoxarife','comprador'].includes(user.role))document.getElementById('nav-cad').style.display='';
   if(adm)document.getElementById('nav-adm').style.display='';
   if(!USE_SUPABASE)document.getElementById('offline-badge').style.display='block';
+  // Show setup banner only for admin
+  if(user.role==='admin'){document.getElementById('setup-banner').style.display='flex';}
   showPage('dashboard');
 }
 function logout(){currentUser=null;location.reload()}
